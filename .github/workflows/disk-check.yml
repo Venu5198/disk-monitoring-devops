@@ -21,3 +21,14 @@ jobs:
       - name: Run disk usage check
         run: |
           python scripts/disk_usage_check.py --path / --threshold 80
+
+      - name: Notify Slack on failure
+        if: failure()
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+        run: |
+          curl -X POST -H 'Content-type: application/json' \
+          --data '{
+            "text": ":rotating_light: *CI Pipeline Failed*\n*Repo:* '"${{ github.repository }}"'\n*Branch:* '"${{ github.ref_name }}"'\n*Commit:* '"${{ github.sha }}"'\n*Job:* disk-check"
+          }' \
+          $SLACK_WEBHOOK_URL
