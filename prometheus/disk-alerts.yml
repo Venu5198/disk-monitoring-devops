@@ -1,0 +1,11 @@
+groups:
+- name: disk-alerts
+  rules:
+  - alert: DiskUsageHigh
+    expr: disk_usage_percent > 1
+    for: 5m
+    labels:
+      severity: critical
+    annotations:
+      summary: "Disk usage high"
+      description: "Disk usage on {{ $labels.path }} is {{ $value }}%"

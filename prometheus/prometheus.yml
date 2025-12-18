@@ -1,0 +1,17 @@
+global:
+  scrape_interval: 30s
+  evaluation_interval: 30s
+
+scrape_configs:
+  - job_name: "disk-usage-exporter"
+    static_configs:
+      - targets: ["localhost:9105"]
+
+rule_files:
+  - "disk-alerts.yml"
+
+alerting:
+  alertmanagers:
+    - static_configs:
+        - targets:
+            - "localhost:9093"
