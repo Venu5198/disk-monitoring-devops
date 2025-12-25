@@ -20,7 +20,7 @@ jobs:
 
       - name: Run disk usage check
         run: |
-          python scripts/disk_usage_check.py --path / --threshold 10
+          python scripts/disk_usage_check.py --path / --threshold 75
 
       - name: Notify Slack on failure
         if: failure()
